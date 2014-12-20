@@ -1,0 +1,15 @@
+c:\users\matt.butlar\documents\visual studio 2010\Projects\API Example\API Example\bin\API Example.dll
+c:\users\matt.butlar\documents\visual studio 2010\Projects\API Example\API Example\bin\API Example.pdb
+c:\users\matt.butlar\documents\visual studio 2010\Projects\API Example\API Example\obj\Debug\ResolveAssemblyReference.cache
+c:\users\matt.butlar\documents\visual studio 2010\Projects\API Example\API Example\obj\Debug\API Example.dll
+c:\users\matt.butlar\documents\visual studio 2010\Projects\API Example\API Example\obj\Debug\API Example.pdb
+C:\IIS\wwwroot\APIProjects\API-Examples\C#\bin\API Example.dll
+C:\IIS\wwwroot\APIProjects\API-Examples\C#\bin\API Example.pdb
+C:\IIS\wwwroot\APIProjects\API-Examples\C#\obj\Debug\API Example.csprojResolveAssemblyReference.cache
+C:\IIS\wwwroot\APIProjects\API-Examples\C#\obj\Debug\API Example.dll
+C:\IIS\wwwroot\APIProjects\API-Examples\C#\obj\Debug\API Example.pdb
+C:\Users\David\Source\Repos\API-Examples\C#\bin\API Example.dll
+C:\Users\David\Source\Repos\API-Examples\C#\bin\API Example.pdb
+C:\Users\David\Source\Repos\API-Examples\C#\obj\Debug\API Example.csprojResolveAssemblyReference.cache
+C:\Users\David\Source\Repos\API-Examples\C#\obj\Debug\API Example.dll
+C:\Users\David\Source\Repos\API-Examples\C#\obj\Debug\API Example.pdb
