@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using API_Example.ClassService;
 using API_Example.ClientService;
+using API_Example.SaleService;
+using XMLDetailLevel = API_Example.SaleService.XMLDetailLevel;
 
 namespace API_Example
 {
@@ -16,7 +20,6 @@ namespace API_Example
             // Set credential values
             string SOURCENAME = "YourSourceName";
             string APIKEY = "YourAPIKey";
-            //int[] siteIDs = { -99 };
             var siteIDs = new List<int> { -99 };
 
 
@@ -95,31 +98,60 @@ namespace API_Example
             // Add ClientID
             saleRequest.ClientID = "123";
 
-
             // Create and add cart items
             SaleService.CartItem[] items = { new SaleService.CartItem() };
-            items[0].ID = 93;
+            items[0].Quantity = 1;
+            items[0].Item = new Product { ID = "1042" };
             saleRequest.CartItems = items;
 
             // Create and add credit card info
-            SaleService.CreditCardInfo[] payments = { new SaleService.CreditCardInfo() };
-            payments[0].CreditCardNumber = "4111111111111111";
-            payments[0].Amount = 2.00M;
-            payments[0].BillingAddress = "123 Something";
-            payments[0].BillingCity = "SLO";
-            payments[0].BillingState = "CA";
-            payments[0].BillingPostalCode = "93405";
-            payments[0].BillingName = "MindBody";
-            payments[0].ExpMonth = "7";
-            payments[0].ExpYear = "2016";
 
-            saleRequest.Payments = payments;
+            SaleService.PaymentInfo paymentInfo = new PaymentInfo();
+
+            PaymentInfo[] paymentsInfo = new PaymentInfo[] {new SaleService.CreditCardInfo
+            {
+                CreditCardNumber = "4111111111111111",
+                Amount = 194.40M,
+                BillingAddress = "123 Something",
+                BillingCity = "SLO",
+                BillingState = "CA",
+                BillingPostalCode = "93405",
+                BillingName = "MindBody",
+                ExpMonth = "7",
+                ExpYear = "2016"  
+            }};
+
+            saleRequest.Payments = paymentsInfo;
+            saleRequest.XMLDetail = XMLDetailLevel.Full;
+            saleRequest.PageSize = 10;
+            saleRequest.CurrentPageIndex = 0;
+            saleRequest.Test = true;
+            saleRequest.InStore = true;
+
 
             // Run call with request and fill result 
             SaleService.CheckoutShoppingCartResult saleResult = saleService.CheckoutShoppingCart(saleRequest);
 
             // Display result in label
-            Label.Text += "<br/>**************************************<div><p>" + saleResult.Message + "</p>";
+            Label.Text += "<br/>**************************************<div>";
+
+            Label.Text += "<p> You purchased the following items: </p>";
+
+            for (int i = 0; i < saleResult.ShoppingCart.CartItems.Count(); i++)
+            {
+                SaleService.CartItem[] tempCartItems = { new SaleService.CartItem() };
+                tempCartItems = saleResult.ShoppingCart.CartItems;
+                if (saleResult.ShoppingCart.CartItems[i].Item.GetType().FullName == "API_Example.SaleService.Product")
+                {
+                    SaleService.Product product = (Product)saleResult.ShoppingCart.CartItems[i].Item;
+                    Label.Text += "<p>Product Name: " + product.Name + "</p>";
+                    Label.Text += "<p>Product Price: " + decimal.Parse(product.Price.ToString()).ToString("C", CultureInfo.CurrentCulture) + "</p>";
+                }
+
+            }
+
+            Label.Text += "<p> Total Tax: " + double.Parse(saleResult.ShoppingCart.TaxTotal.ToString()).ToString("C", CultureInfo.CurrentCulture) + " </p>";
+            Label.Text += "<p> Grand Total: " + double.Parse(saleResult.ShoppingCart.GrandTotal.ToString()).ToString("C", CultureInfo.CurrentCulture) + " </p>";
 
         }
     }
